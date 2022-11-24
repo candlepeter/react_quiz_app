@@ -4,6 +4,12 @@ import useFetch from "../hook/useFetch";
 
 import QuestionView from "./questionView";
 
+import Catergory from "./catergory";
+
+import StartView from "./startView";
+
+import ResultView from "./resultView";
+
 export const GeneralContent = createContext();
 
 export default function Quiz() {
@@ -16,6 +22,10 @@ export default function Quiz() {
   const [score, setScore] = useState(0);
 
   const [select, setSelect] = useState(false);
+
+  const [gameStart, setGameStart] = useState(false);
+
+  const [gameOver, setGameOver] = useState(false);
 
   const { data: categoryData, isLoading: categoryLoading } = useFetch(
     "https://the-trivia-api.com/api/categories",
@@ -36,47 +46,33 @@ export default function Quiz() {
     return <h2>loading...</h2>;
   }
 
-  async function fetchQuestion(category) {
-    let url = `https://the-trivia-api.com/api/questions?categories=${category}&limit=10`;
-
-    const resp = await fetch(url);
-    const data = await resp.json();
-
-    setQuestions(data);
-  }
-
-  const handleClick = (e) => {
-    if (!e.target.closest(".btn")) return;
-    const { value } = e.target;
-    fetchQuestion(value);
-  };
-
-  const handleNext = () => {
-    setCount((prevCount) => prevCount + 1);
-    console.log(count);
-    setSelect(false);
-  };
-
   const currentQuestion = questions[count];
-
-  console.log(currentQuestion);
 
   return (
     <section className="quiz">
-      <h2>select from the different category</h2>
-      <div className="btn-container" onClick={handleClick}>
-        {categories?.map((c, i) => {
-          return (
-            <button value={c} className="btn" key={i}>
-              {c}
-            </button>
-          );
-        })}
-      </div>
-      <GeneralContent.Provider value={{ score, setScore, select, setSelect }}>
+      <GeneralContent.Provider
+        value={{
+          score,
+          setScore,
+          select,
+          setSelect,
+          setQuestions,
+          setCount,
+          count,
+          questions,
+          setGameOver,
+          gameStart,
+          setGameStart,
+        }}
+      >
+        {!gameStart && <StartView />}
+        {gameStart && !currentQuestion && !gameOver && (
+          <Catergory category={categories} />
+        )}
+
         {currentQuestion && <QuestionView {...currentQuestion} />}
+        {gameOver && <ResultView />}
       </GeneralContent.Provider>
-      {select ? <button onClick={handleNext}>Next Question</button> : null}
     </section>
   );
 }

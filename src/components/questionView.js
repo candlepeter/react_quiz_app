@@ -3,12 +3,20 @@ import { GeneralContent } from "./quiz";
 import { shuffled } from "../hook/helper";
 
 const QuestionView = (props) => {
-  const { score, setScore, select, setSelect } = useContext(GeneralContent);
+  const {
+    score,
+    setScore,
+    select,
+    setSelect,
+    setCount,
+    count,
+    questions,
+    setGameOver,
+  } = useContext(GeneralContent);
 
   let answerVals = shuffled([...props.incorrectAnswers, props.correctAnswer]);
 
   const handleClick = (e) => {
-    console.log(e.target.value);
     setSelect(true);
     if (e.target.value === props.correctAnswer) {
       setScore((prevScore) => prevScore + 1);
@@ -17,10 +25,21 @@ const QuestionView = (props) => {
     }
   };
 
-  console.log(score);
+  const handleNext = () => {
+    setCount((prevCount) => prevCount + 1);
+
+    setSelect(false);
+
+    if (count + 1 === questions.length) {
+      setGameOver(true);
+    }
+  };
 
   return (
     <div>
+      <p>
+        {count + 1} of {questions.length}
+      </p>
       <h1>{props.category}</h1>
       <p>{props.question}</p>
       <div className="btn-container" type="a" style={{ cursor: "pointer" }}>
@@ -28,7 +47,7 @@ const QuestionView = (props) => {
           return (
             <button
               disabled={select}
-              key={answer.sort}
+              key={answer.value}
               value={answer.value}
               onClick={handleClick}
             >
@@ -37,6 +56,7 @@ const QuestionView = (props) => {
           );
         })}
       </div>
+      {select ? <button onClick={handleNext}>Next Question</button> : null}
     </div>
   );
 };
