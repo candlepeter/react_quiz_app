@@ -49,7 +49,7 @@ export default function Quiz() {
   const currentQuestion = questions[count];
 
   return (
-    <section className="quiz">
+    <section className="quiz text-white h-full bg-gradient-to-t from-purple-700 to-black grid place-content-center p-5">
       <GeneralContent.Provider
         value={{
           score,
@@ -63,12 +63,11 @@ export default function Quiz() {
           setGameOver,
           gameStart,
           setGameStart,
+          categories,
         }}
       >
         {!gameStart && <StartView />}
-        {gameStart && !currentQuestion && !gameOver && (
-          <Catergory category={categories} />
-        )}
+        {gameStart && !currentQuestion && !gameOver && <Catergory />}
 
         {currentQuestion && <QuestionView {...currentQuestion} />}
         {gameOver && <ResultView />}

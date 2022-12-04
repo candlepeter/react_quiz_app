@@ -9,11 +9,16 @@ function ResultView() {
   };
 
   return (
-    <div>
-      <h1>
+    <div className="h-screen bg-gradient-to-t from-purple-700 to-black grid place-content-center p-5">
+      <h1 className="my-5">
         You Scored: {score} of {questions.length}
       </h1>
-      <button onClick={handleClick}>Restart</button>
+      <button
+        className="py-1.5 px-2.5 cursor-pointer border border-solid rounded-md border-2"
+        onClick={handleClick}
+      >
+        Restart
+      </button>
     </div>
   );
 }

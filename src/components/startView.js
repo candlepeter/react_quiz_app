@@ -11,7 +11,12 @@ function StartView() {
   return (
     <div>
       <h3>click the button below to start quiz</h3>
-      <button onClick={handleClick}>start Quiz</button>
+      <button
+        className="py-1.5 px-3.5 cursor-pointer border border-solid rounded-md border-2"
+        onClick={handleClick}
+      >
+        start Quiz
+      </button>
     </div>
   );
 }
