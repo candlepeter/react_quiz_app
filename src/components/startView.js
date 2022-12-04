@@ -9,7 +9,7 @@ function StartView() {
   };
 
   return (
-    <div>
+    <div className="h-screen bg-gradient-to-t from-purple-700 to-black grid place-content-center p-5">
       <h3>click the button below to start quiz</h3>
       <button
         className="py-1.5 px-3.5 cursor-pointer border border-solid rounded-md border-2"
