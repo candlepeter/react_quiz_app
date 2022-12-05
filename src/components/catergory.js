@@ -1,17 +1,17 @@
 import React, { useContext } from "react";
 import { GeneralContent } from "./quiz";
 
-function Catergory(props) {
+function Catergory() {
   const { setQuestions, categories } = useContext(GeneralContent);
 
-  async function fetchQuestion(category) {
+  const fetchQuestion = async (category) => {
     let url = `https://the-trivia-api.com/api/questions?categories=${category}&limit=10`;
 
     const resp = await fetch(url);
     const data = await resp.json();
 
     setQuestions(data);
-  }
+  };
 
   const handleClick = (e) => {
     if (!e.target.closest(".btn")) return;

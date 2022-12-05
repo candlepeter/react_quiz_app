@@ -10,6 +10,8 @@ import StartView from "./startView";
 
 import ResultView from "./resultView";
 
+import "../quiz.css";
+
 export const GeneralContent = createContext();
 
 export default function Quiz() {
@@ -43,7 +45,7 @@ export default function Quiz() {
   }, [categoryData]);
 
   if (categoryLoading) {
-    return <h2>loading...</h2>;
+    return <span className="loader"></span>;
   }
 
   const currentQuestion = questions[count];
