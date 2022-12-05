@@ -2,10 +2,13 @@ import React, { useContext } from "react";
 import { GeneralContent } from "./quiz";
 
 function ResultView() {
-  const { score, questions, setGameOver } = useContext(GeneralContent);
+  const { score, questions, setGameOver, setQuestion } =
+    useContext(GeneralContent);
 
   const handleClick = () => {
     setGameOver(false);
+    setQuestion([]);
+    set;
   };
 
   return (
